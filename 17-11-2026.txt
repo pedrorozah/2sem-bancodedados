@@ -1,0 +1,76 @@
+-- 1. 
+SELECT COUNT(film_id) AS total_filmes FROM film;
+
+-- 2. sem o round: 16 casas decimais 
+SELECT MIN(length) AS menor_duracao, MAX(length) AS maior_duracao, ROUND(AVG(length), 2) AS media_duracao FROM film;
+
+-- 3. 
+SELECT COUNT(payment_id) AS total_pagamento, SUM(amount) AS faturamento, ROUND(AVG(amount), 2) FROM payment;
+
+-- 4.
+SELECT 
+	rating AS classificacao,
+	COUNT(film_id) total_filmes
+FROM film
+GROUP BY (classificacao)
+ORDER BY classificacao;
+
+-- 5. 
+SELECT
+	store_id, 
+	COUNT(*) 
+FROM customer
+GROUP BY(store_id)
+ORDER BY store_id;
+
+-- 6
+SELECT
+	rating AS classificacao,
+	ROUND(AVG(rental_rate), 2) AS preco_medio,
+	ROUND(AVG(length), 2) AS duracao_media
+FROM film
+GROUP BY(classificacao)
+ORDER BY preco_medio DESC, classificacao;
+
+-- 7
+SELECT 
+	rental_rate AS preco_aluguel,
+	COUNT(*) AS total_filmes,
+	MIN(length) AS menor_duracao,
+	MAX(length) AS maior_duracao
+FROM film
+GROUP BY(preco_aluguel)
+ORDER BY preco_aluguel
+LIMIT 3;
+
+-- 8
+SELECT
+	first_name AS nome,
+	COUNT(first_name) AS quantidade
+FROM actor
+GROUP BY(nome)
+ORDER BY quantidade DESC, nome
+LIMIT 5;
+
+-- 9
+SELECT
+	first_name AS cliente,
+	COUNT(payment_id) AS total_pagamentos,
+	SUM(amount) AS total_gasto
+FROM payment
+INNER JOIN customer USING(customer_id)
+GROUP BY(cliente, customer_id)
+ORDER BY total_gasto DESC, customer_id;
+
+-- 10
+SELECT 
+	rating AS classificacao,
+	COUNT(film_id) AS total_filmes,
+	ROUND(AVG(length),2) AS duracao_media,
+	ROUND(AVG(rental_rate), 2) AS preco_medio
+FROM film WHERE length < 60
+GROUP BY classificacao
+ORDER BY total_filmes DESC, classificacao;
+
+
+	

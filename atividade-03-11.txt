@@ -1,0 +1,39 @@
+-- 1
+
+SELECT title AS titulo, length AS duracao_min, rental_rate AS preco_aluguel FROM film ORDER BY title ASC LIMIT 10;
+
+-- 2
+
+SELECT title AS titulo, length AS duracao_min, ROUND(length / 60.0, 2) AS duracao_horas FROM film WHERE length >= 184 ORDER BY duracao_min DESC, titulo ASC;
+
+-- 3
+
+SELECT title AS titulo, ROUND(rental_rate * 5.50, 2) AS preco_dolar, rental_rate AS preco_reais FROM film WHERE (length < 50 AND rating = 'G') ORDER BY preco_dolar DESC, titulo ASC;
+
+-- 4
+
+SELECT title AS titulo, rental_rate AS preco, rental_duration AS dias, ROUND(rental_rate/rental_duration, 2) AS preco_por_dia FROM film WHERE film_id BETWEEN 1 AND 10 ORDER BY preco_por_dia DESC, titulo ASC;
+
+-- 5
+
+SELECT title AS titulo, replacement_cost AS custo_reposicao, rental_rate AS preco_aluguel, CEIL(replacement_cost/rental_rate) AS alugueis_para_pagar FROM film WHERE film_id BETWEEN 1 AND 10 ORDER BY alugueis_para_pagar DESC, titulo ASC;  
+
+-- 6
+
+SELECT film_id AS codigo, title AS titulo FROM film ORDER BY titulo ASC LIMIT 10 OFFSET 10;
+
+-- 7
+
+SELECT title AS titulo, length AS duracao_min, FLOOR(length/60.0) AS horas, MOD(length, 60) AS minutos FROM film WHERE length < 50 ORDER BY length DESC, titulo ASC;
+
+-- 8
+
+SELECT first_name AS nome, last_name AS sobrenome, email FROM customer WHERE store_id = 2 AND active = 0 ORDER BY sobrenome ASC;
+
+-- 9
+
+SELECT payment_id AS pagamento, customer_id AS cliente, amount AS valor, ROUND(amount - (amount* 0.1) , 2) AS valor_com_desconto FROM payment WHERE amount > 10.0 ORDER BY amount DESC, payment_id ASC LIMIT 5;
+
+-- 10 - não faz sentido, como numa competição qualquer se o resultado é o mesmo tem que --haver outro critério de desempate, nesse caso o critério é pelo nome. Caso contrário teria 10 -- filmes em 3 lugar? Não faz muito sentido 
+
+SELECT title AS titulo, length AS duracao_min FROM film ORDER BY duracao_min DESC, titulo ASC LIMIT 3 OFFSET 2;
